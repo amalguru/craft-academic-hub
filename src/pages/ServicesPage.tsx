@@ -145,19 +145,19 @@ const ServicesPage = () => {
                 },
                 {
                   title: 'Review and approve',
-                  description: 'The expert will draft a project plan that you'll need to review and approve before work begins.'
+                  description: "The expert will draft a project plan that you'll need to review and approve before work begins."
                 },
                 {
                   title: 'Track progress',
-                  description: 'Monitor your project's progress and communicate directly with your expert through our platform.'
+                  description: "Monitor your project's progress and communicate directly with your expert through our platform."
                 },
                 {
                   title: 'Receive and review',
-                  description: 'Once completed, you'll receive your project for review. Request revisions if needed.'
+                  description: "Once completed, you'll receive your project for review. Request revisions if needed."
                 },
                 {
                   title: 'Release payment',
-                  description: 'When you're satisfied with the work, release the payment to complete the transaction.'
+                  description: "When you're satisfied with the work, release the payment to complete the transaction."
                 }
               ].map((step, index) => (
                 <li key={index} className="ml-6 mb-10 last:mb-0">
