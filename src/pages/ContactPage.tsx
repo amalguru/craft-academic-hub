@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/card';
 import { Mail, Phone, MapPin, MessageSquare, AlertCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { sendContactEmail } from '@/utils/emailService';
 
 const ContactPage = () => {
   const { toast } = useToast();
@@ -31,19 +32,32 @@ const ContactPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+    try {
+      // Send email using our utility function
+      await sendContactEmail(formData);
+
+      // Show success toast
       toast({
         title: "Message sent!",
         description: "We'll get back to you as soon as possible.",
       });
-    }, 1500);
+
+      // Clear form
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again later or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
