@@ -79,8 +79,8 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold text-lg">Email Us</h3>
                     <p className="text-gray-600 mb-1">For general inquiries</p>
-                    <a href="mailto:info@educraftprojects.com" className="text-eduBlue-600 hover:text-eduBlue-700">
-                      info@educraftprojects.com
+                    <a href="mailto:amalanathang20@gmail.com" className="text-eduBlue-600 hover:text-eduBlue-700">
+                      amalanathang20@gmail.com
                     </a>
                   </div>
                 </div>
