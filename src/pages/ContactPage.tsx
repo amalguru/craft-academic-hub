@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -92,8 +91,8 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold text-lg">Call Us</h3>
                     <p className="text-gray-600 mb-1">Mon-Fri, 9am-6pm IST</p>
-                    <a href="tel:+918888888888" className="text-eduBlue-600 hover:text-eduBlue-700">
-                      +91 888 888 8888
+                    <a href="tel:+919025775763" className="text-eduBlue-600 hover:text-eduBlue-700">
+                      +91 902 577 5763
                     </a>
                   </div>
                 </div>
