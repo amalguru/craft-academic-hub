@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,33 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// EduCraft custom colors
+				eduBlue: {
+					50: '#f0f7ff',
+					100: '#e0eefe',
+					200: '#b9ddfc',
+					300: '#7cc2fa',
+					400: '#36a3f5',
+					500: '#0c87e8',
+					600: '#006bc6',
+					700: '#0055a1',
+					800: '#004985',
+					900: '#00396f',
+					950: '#002751',
+				},
+				eduGreen: {
+					50: '#eefbf3',
+					100: '#d6f5e1',
+					200: '#aeebca',
+					300: '#79dbaa',
+					400: '#3fc585',
+					500: '#25ac6b',
+					600: '#1a8b55',
+					700: '#176f45',
+					800: '#155839',
+					900: '#134831',
+					950: '#07291c',
 				}
 			},
 			borderRadius: {
@@ -84,12 +112,21 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 6s ease-in-out infinite'
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				heading: ['Poppins', 'sans-serif'],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
