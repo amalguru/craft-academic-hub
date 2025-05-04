@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../lib/auth-context';
 
 export function LoginForm() {
@@ -7,10 +6,6 @@ export function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const { signIn, signInWithGoogle, signInWithGithub } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const from = location.state?.from?.pathname || '/profile';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +13,6 @@ export function LoginForm() {
 
     try {
       await signIn(email, password);
-      navigate(from, { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during sign in');
     }
@@ -26,7 +20,7 @@ export function LoginForm() {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle(from);
+      await signInWithGoogle();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during Google sign in');
     }
@@ -34,7 +28,7 @@ export function LoginForm() {
 
   const handleGithubSignIn = async () => {
     try {
-      await signInWithGithub(from);
+      await signInWithGithub();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during GitHub sign in');
     }

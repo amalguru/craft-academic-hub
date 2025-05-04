@@ -10,8 +10,8 @@ type AuthContextType = {
   signUp: (email: string, password: string, fullName: string) => Promise<void>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
-  signInWithGoogle: (redirectTo?: string) => Promise<void>;
-  signInWithGithub: (redirectTo?: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithGithub: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -110,21 +110,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fetchProfile(user.id);
   };
 
-  const signInWithGoogle = async (redirectTo?: string) => {
+  const signInWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
     if (error) throw error;
   };
 
-  const signInWithGithub = async (redirectTo?: string) => {
+  const signInWithGithub = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
     if (error) throw error;
