@@ -14,28 +14,70 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { User, Briefcase } from 'lucide-react';
+import { User, Briefcase, Phone } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { registerUser } from '@/utils/authService';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  
   const [userType, setUserType] = useState('client');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Here we would normally have registration logic
-    setTimeout(() => {
+    // Basic validation
+    if (password !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords don't match",
+        variant: "destructive",
+      });
       setIsLoading(false);
-      // Mock successful registration
-      navigate('/login');
-    }, 1500);
+      return;
+    }
+    
+    try {
+      // Here we would register the user with MongoDB
+      const result = await registerUser({
+        name,
+        email,
+        password,
+        mobileNumber,
+        userType: userType as 'client' | 'provider',
+      });
+      
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: "Registration successful. Please login.",
+        });
+        navigate('/login');
+      } else {
+        toast({
+          title: "Error",
+          description: result.message,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Registration failed. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -83,6 +125,17 @@ const RegisterPage = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="client-mobile">Mobile Number</Label>
+                    <Input 
+                      id="client-mobile"
+                      type="tel" 
+                      placeholder="Your mobile number"
+                      required
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
@@ -172,6 +225,17 @@ const RegisterPage = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="provider-mobile">Mobile Number</Label>
+                    <Input 
+                      id="provider-mobile"
+                      type="tel" 
+                      placeholder="Your mobile number"
+                      required
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">

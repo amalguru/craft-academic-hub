@@ -14,28 +14,58 @@ import {
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { User, Briefcase } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { loginUser } from '@/utils/authService';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  
   const [userType, setUserType] = useState('client');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Here we would normally have authentication logic
-    setTimeout(() => {
-      setIsLoading(false);
-      // Mock successful login
-      if (userType === 'client') {
-        navigate('/dashboard/client');
+    try {
+      // Here we would authenticate with MongoDB
+      const result = await loginUser(
+        email, 
+        password, 
+        userType as 'client' | 'provider'
+      );
+      
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: "Login successful",
+        });
+        
+        // Redirect based on user type
+        if (result.userType === 'client') {
+          navigate('/dashboard/client');
+        } else {
+          navigate('/dashboard/provider');
+        }
       } else {
-        navigate('/dashboard/provider');
+        toast({
+          title: "Error",
+          description: result.message,
+          variant: "destructive",
+        });
       }
-    }, 1500);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Login failed. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
