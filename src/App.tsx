@@ -1,9 +1,8 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -17,6 +16,12 @@ import AdminDashboardPage from "./pages/dashboard/admin/AdminDashboardPage";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/layout/Layout";
 import DashboardLayout from "./components/layout/DashboardLayout";
+import { AuthProvider } from './lib/auth-context';
+import { LoginForm } from './components/auth/LoginForm';
+import { SignUpForm } from './components/auth/SignUpForm';
+import { ProfileForm } from './components/auth/ProfileForm';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { AuthCallback } from './components/auth/AuthCallback';
 
 const queryClient = new QueryClient();
 
@@ -25,25 +30,33 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="contact" element={<ContactPage />} />
-            <Route path="order" element={<OrderPage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-          </Route>
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route path="client/*" element={<ClientDashboardPage />} />
-            <Route path="provider/*" element={<ProviderDashboardPage />} />
-            <Route path="admin/*" element={<AdminDashboardPage />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="about" element={<AboutPage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="order" element={<OrderPage />} />
+              <Route path="login" element={<LoginForm />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="auth/callback" element={<AuthCallback />} />
+            </Route>
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route path="client/*" element={<ClientDashboardPage />} />
+              <Route path="provider/*" element={<ProviderDashboardPage />} />
+              <Route path="admin/*" element={<AdminDashboardPage />} />
+            </Route>
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <ProfileForm />
+              </ProtectedRoute>
+            } />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
