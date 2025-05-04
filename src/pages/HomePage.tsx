@@ -25,7 +25,7 @@ const HomePage = () => {
                   </Button>
                 </Link>
                 <Link to="/services">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                  <Button size="lg" variant="outline" className="border-white text-eduBlue-300 hover:bg-white hover:text-eduBlue-600 font-medium">
                     View Services
                   </Button>
                 </Link>
