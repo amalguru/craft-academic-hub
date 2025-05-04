@@ -8,9 +8,9 @@ export const initEmailService = (userId: string) => {
 
 // Email sending configuration
 export const EMAIL_CONFIG = {
-  serviceId: 'default_service', // Replace with your EmailJS service ID
-  templateId: 'template_contact_form', // Replace with your EmailJS template ID
-  userId: 'user_XXXXXXXXXXXXXX', // Replace with your EmailJS user ID
+  serviceId: 'service_2l22yn9', // Your EmailJS service ID
+  templateId: 'template_u3aj8ii', // Your EmailJS template ID
+  userId: '_F_s7v-YO34mumNMf', // Your EmailJS public key
 };
 
 // Send email function

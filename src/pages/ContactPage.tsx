@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +14,7 @@ import {
 } from '@/components/ui/card';
 import { Mail, Phone, MapPin, MessageSquare, AlertCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import { sendContactEmail } from '@/utils/emailService';
+import { sendContactEmail, initEmailService, EMAIL_CONFIG } from '@/utils/emailService';
 
 const ContactPage = () => {
   const { toast } = useToast();
@@ -24,6 +25,11 @@ const ContactPage = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Initialize EmailJS when component mounts
+  useEffect(() => {
+    initEmailService(EMAIL_CONFIG.userId);
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
