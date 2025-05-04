@@ -6,13 +6,32 @@ export function AuthCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        navigate('/profile');
-      } else {
+    const handleAuthCallback = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          navigate('/login');
+          return;
+        }
+
+        if (session) {
+          // Check if we have a redirect URL in the state
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectTo = urlParams.get('redirectTo') || '/profile';
+          
+          navigate(redirectTo);
+        } else {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error in auth callback:', error);
         navigate('/login');
       }
-    });
+    };
+
+    handleAuthCallback();
   }, [navigate]);
 
   return (

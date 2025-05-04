@@ -22,6 +22,7 @@ import { SignUpForm } from './components/auth/SignUpForm';
 import { ProfileForm } from './components/auth/ProfileForm';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { AuthCallback } from './components/auth/AuthCallback';
+import { AuthTest } from './components/auth/AuthTest';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,11 @@ const App = () => (
             <Route path="/profile" element={
               <ProtectedRoute>
                 <ProfileForm />
+              </ProtectedRoute>
+            } />
+            <Route path="/auth-test" element={
+              <ProtectedRoute>
+                <AuthTest />
               </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />
