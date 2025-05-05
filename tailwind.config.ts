@@ -1,7 +1,6 @@
-
 import type { Config } from "tailwindcss";
 
-export default {
+const config = {
 	darkMode: ["class"],
 	content: [
 		"./pages/**/*.{ts,tsx}",
@@ -66,29 +65,29 @@ export default {
 				// EduCraft custom colors
 				eduBlue: {
 					50: '#f0f7ff',
-					100: '#e0eefe',
-					200: '#b9ddfc',
-					300: '#7cc2fa',
-					400: '#36a3f5',
-					500: '#0c87e8',
-					600: '#006bc6',
-					700: '#0055a1',
-					800: '#004985',
-					900: '#00396f',
-					950: '#002751',
+					100: '#e0effe',
+					200: '#bae0fd',
+					300: '#7cc8fb',
+					400: '#36aaf5',
+					500: '#0c8ee4',
+					600: '#0070c2',
+					700: '#005a9e',
+					800: '#004b83',
+					900: '#00406d',
+					950: '#002847',
 				},
 				eduGreen: {
-					50: '#eefbf3',
-					100: '#d6f5e1',
-					200: '#aeebca',
-					300: '#79dbaa',
-					400: '#3fc585',
-					500: '#25ac6b',
-					600: '#1a8b55',
-					700: '#176f45',
-					800: '#155839',
-					900: '#134831',
-					950: '#07291c',
+					50: '#f0fdf4',
+					100: '#dcfce7',
+					200: '#bbf7d0',
+					300: '#86efac',
+					400: '#4ade80',
+					500: '#22c55e',
+					600: '#16a34a',
+					700: '#15803d',
+					800: '#166534',
+					900: '#14532d',
+					950: '#052e16',
 				}
 			},
 			borderRadius: {
@@ -131,3 +130,5 @@ export default {
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
+export default config;
