@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../lib/auth-context';
@@ -20,6 +21,7 @@ export function LoginForm() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<string | null>(null);
   const { signIn, signInWithGoogle, signInWithGithub } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -47,8 +49,11 @@ export function LoginForm() {
 
   const handleGoogleSignIn = async () => {
     try {
+      setOauthLoading('google');
       await signInWithGoogle();
+      // Note: We don't need toast here because the user will be redirected away
     } catch (err) {
+      setOauthLoading(null);
       toast({
         title: "Error",
         description: err instanceof Error ? err.message : 'An error occurred during Google sign in',
@@ -59,8 +64,11 @@ export function LoginForm() {
 
   const handleGithubSignIn = async () => {
     try {
+      setOauthLoading('github');
       await signInWithGithub();
+      // Note: We don't need toast here because the user will be redirected away
     } catch (err) {
+      setOauthLoading(null);
       toast({
         title: "Error",
         description: err instanceof Error ? err.message : 'An error occurred during GitHub sign in',
@@ -154,20 +162,22 @@ export function LoginForm() {
                   type="button"
                   variant="outline"
                   onClick={handleGoogleSignIn}
+                  disabled={oauthLoading !== null}
                   className="w-full border-gray-300"
                 >
                   <Mail className="mr-2 h-4 w-4" />
-                  Google
+                  {oauthLoading === 'google' ? 'Loading...' : 'Google'}
                 </Button>
                 
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleGithubSignIn}
+                  disabled={oauthLoading !== null}
                   className="w-full border-gray-300"
                 >
                   <Github className="mr-2 h-4 w-4" />
-                  GitHub
+                  {oauthLoading === 'github' ? 'Loading...' : 'GitHub'}
                 </Button>
               </div>
             </CardContent>
