@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../lib/auth-context';
@@ -13,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Eye, EyeOff, Github, Google, Lock, User } from 'lucide-react';
+import { Eye, EyeOff, Github, Mail, Lock, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export function LoginForm() {
@@ -157,7 +156,7 @@ export function LoginForm() {
                   onClick={handleGoogleSignIn}
                   className="w-full border-gray-300"
                 >
-                  <Google className="mr-2 h-4 w-4" />
+                  <Mail className="mr-2 h-4 w-4" />
                   Google
                 </Button>
                 
