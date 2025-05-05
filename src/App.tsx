@@ -17,6 +17,7 @@ import NotFound from "./pages/NotFound";
 import Layout from "./components/layout/Layout";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import { AuthProvider } from './lib/auth-context';
+import { ThemeProvider } from './lib/theme-context';
 import { LoginForm } from './components/auth/LoginForm';
 import { SignUpForm } from './components/auth/SignUpForm';
 import { ProfileForm } from './components/auth/ProfileForm';
@@ -28,42 +29,44 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <AuthProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="services" element={<ServicesPage />} />
-              <Route path="contact" element={<ContactPage />} />
-              <Route path="order" element={<OrderPage />} />
-              <Route path="login" element={<LoginForm />} />
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="auth/callback" element={<AuthCallback />} />
-            </Route>
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              <Route path="client/*" element={<ClientDashboardPage />} />
-              <Route path="provider/*" element={<ProviderDashboardPage />} />
-              <Route path="admin/*" element={<AdminDashboardPage />} />
-            </Route>
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <ProfileForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/auth-test" element={
-              <ProtectedRoute>
-                <AuthTest />
-              </ProtectedRoute>
-            } />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<HomePage />} />
+                <Route path="about" element={<AboutPage />} />
+                <Route path="services" element={<ServicesPage />} />
+                <Route path="contact" element={<ContactPage />} />
+                <Route path="order" element={<OrderPage />} />
+                <Route path="login" element={<LoginForm />} />
+                <Route path="register" element={<RegisterPage />} />
+                <Route path="auth/callback" element={<AuthCallback />} />
+              </Route>
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route path="client/*" element={<ClientDashboardPage />} />
+                <Route path="provider/*" element={<ProviderDashboardPage />} />
+                <Route path="admin/*" element={<AdminDashboardPage />} />
+              </Route>
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <ProfileForm />
+                </ProtectedRoute>
+              } />
+              <Route path="/auth-test" element={
+                <ProtectedRoute>
+                  <AuthTest />
+                </ProtectedRoute>
+              } />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
